@@ -3,8 +3,43 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bawatna Gold Algos — Precision Price-Action Systems for XAUUSD</title>
-<meta name="description" content="Bawatna Gold Algos — a focused suite of no-repaint price-action systems for gold (XAUUSD), built for MetaTrader 5." />
+<title>Gold Trading Indicator MT5 — XAUUSD Price Action Monitor | Bawatna Gold Algos</title>
+<meta name="description" content="A 100% no-repaint gold trading indicator for MT5. Bawatna Gold Algos' XAUUSD Price Action Monitor delivers engulfing & pinbar signals with institutional-grade volume filters and live alerts — download on MQL5." />
+<meta name="keywords" content="Gold Trading Indicator MT5, XAUUSD Price Action Monitor, Bawatna Gold Algos, MQL5 Gold Algo, no-repaint gold indicator, institutional volume filter, XAUUSD signals, MetaTrader 5 gold indicator, gold price action monitor" />
+<meta name="author" content="Bawatna" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<!-- EDIT: set these to YOUR landing-page URL (leave commented if you don't have a dedicated domain, so you don't hand ranking authority to MQL5) -->
+<!-- <link rel="canonical" href="https://your-domain.com/" /> -->
+
+<!-- Open Graph -->
+<meta property="og:type" content="product" />
+<meta property="og:title" content="Gold Trading Indicator MT5 — XAUUSD Price Action Monitor | Bawatna Gold Algos" />
+<meta property="og:description" content="A 100% no-repaint gold trading indicator for MT5 — engulfing & pinbar signals with institutional-grade volume filters. Download the XAUUSD Price Action Monitor on MQL5." />
+<meta property="og:site_name" content="Bawatna Gold Algos" />
+<!-- <meta property="og:url" content="https://your-domain.com/" /> -->
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Gold Trading Indicator MT5 — XAUUSD Price Action Monitor" />
+<meta name="twitter:description" content="100% no-repaint gold indicator for MT5 with institutional-grade volume filters. Bawatna Gold Algos — XAUUSD Price Action Monitor on MQL5." />
+
+<!-- Structured data: SoftwareApplication (technical SEO — helps rich results) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Gold Price Action Monitor",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "MetaTrader 5",
+  "description": "No-repaint XAUUSD price action indicator for MetaTrader 5 — multi-timeframe engulfing and pinbar detection with live alerts.",
+  "url": "https://www.mql5.com/en/market/product/183680",
+  "author": { "@type": "Person", "name": "Bawatna", "url": "https://www.mql5.com/en/users/bawatna" },
+  "offers": [
+    { "@type": "Offer", "price": "120", "priceCurrency": "USD", "description": "Buy — unlimited licence" },
+    { "@type": "Offer", "price": "30", "priceCurrency": "USD", "description": "Rent — 1 year" }
+  ]
+}
+</script>
 
 <!-- Premium type pairing: Cormorant Garamond (display) + Outfit (UI). Graceful offline fallback. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -62,6 +97,42 @@ body{
 }
 .vignette{ position:fixed; inset:0; z-index:1; pointer-events:none;
   background:radial-gradient(120% 100% at 50% 50%, transparent 55%, rgba(0,0,0,.55) 100%); }
+
+/* Dynamic Fluid Gold Nebula — blurred, glowing gold dust drifting in a fluid breeze (3 depth layers) */
+.gold-dust{ position:fixed; inset:0; z-index:1; pointer-events:none; overflow:hidden; mix-blend-mode:screen; }
+.gold-dust .mote{
+  position:absolute; top:var(--top,50%); left:var(--left,50%);
+  width:var(--s,4px); height:var(--s,4px); border-radius:50%;
+  /* soft radial-gradient body = inherently blurred glowing dust */
+  background:radial-gradient(circle,
+    rgba(255,247,218,.95) 0%,
+    rgba(255,212,124,.55) 38%,
+    rgba(231,182,77,0) 72%);
+  /* glow halo */
+  box-shadow:0 0 var(--g,10px) rgba(255,208,112,.55);
+  filter:blur(var(--b,1px));
+  opacity:0;
+  animation:mistDrift var(--d,26s) ease-in-out var(--delay,0s) infinite;
+  will-change:transform, opacity;
+}
+/* 3 depth layers — size / blur / glow / opacity / speed */
+.gold-dust .l1{ --s:7px;   --b:1px;   --g:18px; --o:.90; --d:19s; }   /* close  · large · fast */
+.gold-dust .l2{ --s:4.5px; --b:1.4px; --g:13px; --o:.72; --d:29s; }   /* mid depth              */
+.gold-dust .l3{ --s:2.5px; --b:2px;   --g:9px;  --o:.50; --d:41s; }   /* far   · small · slow   */
+/* fluid float: vertical rise (translateY) + sine-wave sway (translateX) = a natural breeze */
+@keyframes mistDrift{
+  0%   { transform:translate3d(0, 0, 0);                                  opacity:0; }
+  12%  { opacity:var(--o,.7); }
+  30%  { transform:translate3d(calc(var(--x,14) *  1px),   -12vh, 0); }
+  55%  { transform:translate3d(calc(var(--x,14) * -0.72px), -26vh, 0); }
+  80%  { transform:translate3d(calc(var(--x,14) *  0.9px),  -40vh, 0); }
+  88%  { opacity:var(--o,.7); }
+  100% { transform:translate3d(0, -52vh, 0);                              opacity:0; }
+}
+/* keep a soft, static gold mist for reduced-motion users */
+@media (prefers-reduced-motion: reduce){
+  .gold-dust .mote{ opacity:var(--o,.6); }
+}
 
 .view{
   position:fixed; inset:0; z-index:2; overflow-y:auto; overflow-x:hidden;
@@ -168,7 +239,7 @@ body[data-view="detail"] .view--detail{ opacity:1; visibility:visible; transform
 .detail-top{ display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; margin-bottom:clamp(26px,5vh,50px); }
 .detail-head{ max-width:60ch; margin-bottom:clamp(26px,4vh,44px); }
 .detail-head .eyebrow{ margin-bottom:16px; }
-.detail-head h1{ font-family:var(--font-display); font-weight:500; font-size:clamp(34px,6vw,64px);
+.detail-head h2{ font-family:var(--font-display); font-weight:500; font-size:clamp(34px,6vw,64px);
   line-height:1.0; margin:0 0 14px; background:linear-gradient(180deg,#fff3d0,var(--gold) 60%,#a9781f);
   -webkit-background-clip:text; background-clip:text; color:transparent; }
 .detail-head p{ color:var(--ink-dim); font-size:clamp(14px,1.7vw,17px); line-height:1.7; margin:0; max-width:52ch; }
@@ -332,6 +403,40 @@ body[data-view="detail"] .view--detail{ opacity:1; visibility:visible; transform
 <canvas id="core-canvas" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
 <div class="vignette" aria-hidden="true"></div>
+<div class="gold-dust" aria-hidden="true">
+    <span class="mote l3" style="--left:4%;--top:10%;--x:10;--d:40s;--delay:-5s;"></span>
+    <span class="mote l3" style="--left:16%;--top:18%;--x:8;--d:43s;--delay:-15s;"></span>
+    <span class="mote l3" style="--left:30%;--top:8%;--x:12;--d:39s;--delay:-25s;--s:2px;"></span>
+    <span class="mote l3" style="--left:44%;--top:14%;--x:9;--d:42s;--delay:-33s;"></span>
+    <span class="mote l3" style="--left:58%;--top:6%;--x:11;--d:41s;--delay:-10s;"></span>
+    <span class="mote l3" style="--left:70%;--top:16%;--x:8;--d:44s;--delay:-20s;"></span>
+    <span class="mote l3" style="--left:82%;--top:10%;--x:12;--d:40s;--delay:-30s;"></span>
+    <span class="mote l3" style="--left:92%;--top:20%;--x:9;--d:43s;--delay:-38s;"></span>
+    <span class="mote l3" style="--left:24%;--top:4%;--x:10;--d:41s;--delay:-12s;"></span>
+    <span class="mote l3" style="--left:50%;--top:34%;--x:8;--d:42s;--delay:-28s;"></span>
+    <span class="mote l3" style="--left:64%;--top:24%;--x:11;--d:40s;--delay:-18s;"></span>
+    <span class="mote l3" style="--left:88%;--top:40%;--x:9;--d:43s;--delay:-36s;"></span>
+    <span class="mote l2" style="--left:6%;--top:40%;--x:12;--d:28s;--delay:-4s;"></span>
+    <span class="mote l2" style="--left:20%;--top:30%;--x:16;--d:31s;--delay:-12s;"></span>
+    <span class="mote l2" style="--left:34%;--top:46%;--x:10;--d:27s;--delay:-20s;"></span>
+    <span class="mote l2" style="--left:48%;--top:24%;--x:14;--d:30s;--delay:-8s;--s:5px;"></span>
+    <span class="mote l2" style="--left:60%;--top:44%;--x:18;--d:29s;--delay:-16s;"></span>
+    <span class="mote l2" style="--left:72%;--top:28%;--x:12;--d:32s;--delay:-24s;"></span>
+    <span class="mote l2" style="--left:84%;--top:48%;--x:16;--d:27s;--delay:-6s;"></span>
+    <span class="mote l2" style="--left:94%;--top:34%;--x:10;--d:30s;--delay:-18s;"></span>
+    <span class="mote l2" style="--left:28%;--top:18%;--x:14;--d:29s;--delay:-22s;"></span>
+    <span class="mote l2" style="--left:56%;--top:14%;--x:12;--d:31s;--delay:-10s;"></span>
+    <span class="mote l2" style="--left:12%;--top:52%;--x:18;--d:28s;--delay:-26s;"></span>
+    <span class="mote l1" style="--left:10%;--top:82%;--x:18;--d:18s;--delay:-2s;"></span>
+    <span class="mote l1" style="--left:24%;--top:60%;--x:14;--d:21s;--delay:-9s;--s:6px;"></span>
+    <span class="mote l1" style="--left:38%;--top:88%;--x:22;--d:17s;--delay:-5s;"></span>
+    <span class="mote l1" style="--left:52%;--top:70%;--x:12;--d:20s;--delay:-13s;"></span>
+    <span class="mote l1" style="--left:66%;--top:90%;--x:20;--d:19s;--delay:-7s;--s:8px;"></span>
+    <span class="mote l1" style="--left:78%;--top:66%;--x:16;--d:22s;--delay:-3s;"></span>
+    <span class="mote l1" style="--left:90%;--top:84%;--x:24;--d:18s;--delay:-11s;"></span>
+    <span class="mote l1" style="--left:46%;--top:54%;--x:14;--d:21s;--delay:-16s;"></span>
+    <span class="mote l1" style="--left:16%;--top:72%;--x:20;--d:19s;--delay:-14s;"></span>
+  </div>
 
 <!-- ============================================================
      VIEW 1 — CORE ECOSYSTEM HUB
@@ -340,13 +445,12 @@ body[data-view="detail"] .view--detail{ opacity:1; visibility:visible; transform
   <div class="shell hub-inner">
 
     <header class="brand">
-      <span class="eyebrow">XAUUSD &middot; Price-Action Intelligence</span>
-      <div class="wordmark">
+      <h1 class="wordmark">
         <span class="line1">Bawatna</span>
         <span class="line2">Gold Algos</span>
-      </div>
+      </h1>
       <hr class="rule" />
-      <p class="tagline">A focused suite of gold trading systems — engineered for precision, built to never repaint.</p>
+      <p class="tagline">Track gold like an institution — pinpoint XAUUSD price-action signals, locked to the close and engineered to never repaint.</p>
     </header>
 
     <section class="stage" aria-label="Featured system">
@@ -359,7 +463,7 @@ body[data-view="detail"] .view--detail{ opacity:1; visibility:visible; transform
             <span class="pill pill--live"><span class="dot"></span>Live &amp; Certified</span>
           </div>
           <h2>Gold Price Action Monitor</h2>
-          <p>Multi-timeframe engulfing and pinbar detection with live alerts, tuned specifically for XAUUSD.</p>
+          <p>A 100% no-repaint guarantee on every signal — engulfing &amp; pinbar setups confirmed by institutional-grade volume filters across M1, M5 and M15. Explore the system, then get it on MQL5.</p>
           <div class="c-foot">
             <a class="btn btn--gold" data-nav="detail" href="#system" role="button">
               Explore System <span class="arw">&rarr;</span>
@@ -448,9 +552,9 @@ body[data-view="detail"] .view--detail{ opacity:1; visibility:visible; transform
     </div>
 
     <header class="detail-head">
-      <span class="eyebrow">Live &amp; Certified &middot; XAUUSD</span>
-      <h1>Gold Price Action Monitor</h1>
-      <p>Closed-candle pattern detection with a hard no-repaint guarantee — engulfing and pinbar signals across M1, M5 and M15, delivered as live alerts.</p>
+      <span class="eyebrow">Institutional Gold Tracking &middot; No-Repaint &middot; XAUUSD</span>
+      <h2>Gold Price Action Monitor</h2>
+      <p>Track gold with institutional precision. Every engulfing and pinbar signal is locked to the closed candle — a hard no-repaint guarantee — and delivered live across M1, M5 and M15.</p>
     </header>
 
     <!-- ===== LIVE CSS TRADING HERO (fully coded — no image) ===== -->
